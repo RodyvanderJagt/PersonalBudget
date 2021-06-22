@@ -8,6 +8,11 @@ const getAllFromDatabase = () => {
     return envelopes;
 }
 
+const getFromDatabaseById = (id) => {
+    return envelopes.find(element => element.id === id)
+}
+
+
 const addToDatabase = (instance) => {
     if (isValidEnvelope(instance)) {
         instance.id = `${envelopeIdCounter++}`;
@@ -32,5 +37,6 @@ const isValidEnvelope = (instance) => {
 
 module.exports = {
     getAllFromDatabase,
+    getFromDatabaseById,
     addToDatabase
 }
