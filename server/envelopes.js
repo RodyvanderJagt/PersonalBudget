@@ -5,6 +5,7 @@ const envelopesRouter = express.Router();
 const {
     getAllFromDatabase,
     addToDatabase,
+    getTotalBudget,
     getFromDatabaseById,
     deleteFromDatabaseById} = require('./db.js')
 
@@ -15,6 +16,10 @@ envelopesRouter.get('', (req, res) => {
 envelopesRouter.post('', (req, res) => {
     const addEnvelope = addToDatabase(req.body);
     res.status(201).send(addEnvelope);
+})
+
+envelopesRouter.get('/total-budget', (req, res) => {
+    res.send(getTotalBudget());
 })
 
 

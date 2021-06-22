@@ -12,11 +12,17 @@ const getFromDatabaseById = (id) => {
     return envelopes.find(element => element.id === id)
 }
 
+const getTotalBudget = () => {
+    return {
+        "total-budget": totalBudget
+    };
+}
 
 const addToDatabase = (instance) => {
     if (isValidEnvelope(instance)) {
         instance.id = `${envelopeIdCounter++}`;
         envelopes.push(instance);
+        totalBudget += instance.budget;
     }
     return envelopes[envelopes.length - 1];
 }
@@ -24,6 +30,7 @@ const addToDatabase = (instance) => {
 const deleteFromDatabaseById = (id) => {
     const index = envelopes.findIndex(element => element.id === id);
     if (index !== -1){
+        totalBudget -= envelopes[index].budget;
         envelopes.splice(index, 1);
         return true;
     } else {
@@ -48,6 +55,7 @@ const isValidEnvelope = (instance) => {
 module.exports = {
     getAllFromDatabase,
     getFromDatabaseById,
+    getTotalBudget,
     addToDatabase,
     deleteFromDatabaseById
 }
