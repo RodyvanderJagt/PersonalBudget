@@ -61,6 +61,4 @@ envelopesRouter.post('/transfer/:from/:to', (req, res) => {
     }
 })
 
-
-
 module.exports = envelopesRouter;

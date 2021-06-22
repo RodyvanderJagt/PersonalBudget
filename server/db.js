@@ -3,7 +3,6 @@ let envelopes = [];
 let envelopeIdCounter = 1;
 let totalBudget = 0;
 
-
 const getAllFromDatabase = () => {
     return envelopes;
 }
@@ -64,7 +63,6 @@ const isValidEnvelope = (instance) => {
     }
     return true;
 }
-
 
 module.exports = {
     getAllFromDatabase,
