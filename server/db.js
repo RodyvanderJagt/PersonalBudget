@@ -38,6 +38,19 @@ const deleteFromDatabaseById = (id) => {
     }
 }
 
+const addMoneyToEnvelopeById = (id, money) => {
+    const envelope = envelopes.find(element => element.id === id);
+    if(!isNaN(parseFloat(money)) && isFinite(money)){
+        if (envelope.budget + money < 0) {
+            throw new Error("Cost exceeds current budget");
+        } else {
+            envelope.budget += money;
+        }
+    } else {
+        throw new Error('Value must be a number');
+    }
+}
+
 const isValidEnvelope = (instance) => {
     instance.title = instance.title || '';
     instance.description = instance.description || '';
@@ -52,10 +65,12 @@ const isValidEnvelope = (instance) => {
     return true;
 }
 
+
 module.exports = {
     getAllFromDatabase,
     getFromDatabaseById,
     getTotalBudget,
     addToDatabase,
-    deleteFromDatabaseById
+    deleteFromDatabaseById,
+    addMoneyToEnvelopeById
 }

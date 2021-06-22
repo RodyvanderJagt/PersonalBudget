@@ -7,7 +7,8 @@ const {
     addToDatabase,
     getTotalBudget,
     getFromDatabaseById,
-    deleteFromDatabaseById} = require('./db.js')
+    deleteFromDatabaseById,
+    addMoneyToEnvelopeById} = require('./db.js')
 
 envelopesRouter.get('', (req, res) => {
     res.send(getAllFromDatabase());
@@ -38,16 +39,7 @@ envelopesRouter.get('/:id', (req, res) => {
 });
 
 envelopesRouter.post('/:id', (req, res) => {
-    instance = req.body;
-    if(!isNaN(parseFloat(instance.cost)) && isFinite(instance.cost)){
-        if (instance.cost > req.envelope.budget) {
-            throw new Error("Cost exceeds current budget");
-        } else {
-            req.envelope.budget -= instance.cost;
-        }
-    } else {
-        throw new Error('Cost must be a number');
-    }
+    addMoneyToEnvelopeById(req.params.id, -req.body.amount)
     res.send(req.envelope);
 })
 
@@ -57,6 +49,17 @@ envelopesRouter.delete('/:id', (req, res) => {
     res.send();
 })
 
+envelopesRouter.post('/transfer/:from/:to', (req, res) => {
+    const fromEnvelope = getFromDatabaseById(req.params.from);
+    const toEnvelope = getFromDatabaseById(req.params.to);
+    if (fromEnvelope && toEnvelope) {
+        addMoneyToEnvelopeById(fromEnvelope.id, -req.body.amount);
+        addMoneyToEnvelopeById(toEnvelope.id, req.body.amount);
+        res.send();
+    } else {
+        res.status(404).send();
+    }
+})
 
 
 
