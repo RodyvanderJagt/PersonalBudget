@@ -7,9 +7,9 @@ const {
     addToDatabase} = require('./db.js')
 
 
-//Simple endpoint
+
 envelopesRouter.get('', (req, res) => {
-    res.send("hello, envelopes!");
+    res.send(getAllFromDatabase());
 })
 
 envelopesRouter.post('', (req, res) => {
