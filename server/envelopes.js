@@ -7,8 +7,6 @@ const {
     addToDatabase,
     getFromDatabaseById} = require('./db.js')
 
-
-
 envelopesRouter.get('', (req, res) => {
     res.send(getAllFromDatabase());
 });
@@ -33,6 +31,19 @@ envelopesRouter.get('/:id', (req, res) => {
     res.send(req.envelope);
 });
 
+envelopesRouter.post('/:id', (req, res) => {
+    instance = req.body;
+    if(!isNaN(parseFloat(instance.cost)) && isFinite(instance.cost)){
+        if (instance.cost > req.envelope.budget) {
+            throw new Error("Cost exceeds current budget");
+        } else {
+            req.envelope.budget -= instance.cost;
+        }
+    } else {
+        throw new Error('Cost must be a number');
+    }
+    res.send(req.envelope);
+})
 
 
 
