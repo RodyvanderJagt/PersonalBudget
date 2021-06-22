@@ -5,7 +5,8 @@ const envelopesRouter = express.Router();
 const {
     getAllFromDatabase,
     addToDatabase,
-    getFromDatabaseById} = require('./db.js')
+    getFromDatabaseById,
+    deleteFromDatabaseById} = require('./db.js')
 
 envelopesRouter.get('', (req, res) => {
     res.send(getAllFromDatabase());
@@ -43,6 +44,12 @@ envelopesRouter.post('/:id', (req, res) => {
         throw new Error('Cost must be a number');
     }
     res.send(req.envelope);
+})
+
+envelopesRouter.delete('/:id', (req, res) => {
+    const isDeleted = deleteFromDatabaseById(req.params.id);
+    isDeleted ? res.status(204) : res.status(500);
+    res.send();
 })
 
 

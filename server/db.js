@@ -21,6 +21,16 @@ const addToDatabase = (instance) => {
     return envelopes[envelopes.length - 1];
 }
 
+const deleteFromDatabaseById = (id) => {
+    const index = envelopes.findIndex(element => element.id === id);
+    if (index !== -1){
+        envelopes.splice(index, 1);
+        return true;
+    } else {
+        return false;
+    }
+}
+
 const isValidEnvelope = (instance) => {
     instance.title = instance.title || '';
     instance.description = instance.description || '';
@@ -38,5 +48,6 @@ const isValidEnvelope = (instance) => {
 module.exports = {
     getAllFromDatabase,
     getFromDatabaseById,
-    addToDatabase
+    addToDatabase,
+    deleteFromDatabaseById
 }
