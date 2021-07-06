@@ -11,6 +11,9 @@ app.use(
 const envelopesRouter = require('./server/envelopes.js');
 app.use('/envelopes', envelopesRouter);
 
+const transactionsRouter = require('./server/transactions.js');
+app.use('/transactions', transactionsRouter);
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
