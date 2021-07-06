@@ -94,6 +94,11 @@ const transferMoneyById = async (req, res) => {
         const addMoneyText = 'UPDATE envelopes SET budget = budget + $1 WHERE id = $2';
         await client.query(substractMoneyText, [amount, from]);
         await client.query(addMoneyText, [amount, to]);
+        
+        //Add transaction to transactions table
+        const transactionText = 'INSERT INTO transactions (from_envelope_id, to_envelope_id, date, amount) VALUES ($1, $2, $3, $4)';
+        await client.query(transactionText, [from, to, new Date(), amount]);
+
         await client.query('COMMIT', (error, results) => {
                 if (error){
                     throw error;
