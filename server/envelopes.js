@@ -4,18 +4,16 @@ const envelopesRouter = express.Router();
 
 const db = require('./queries.js');
 
-envelopesRouter.get('', db.getAllFromDatabase);
+envelopesRouter.get('', db.getAllEnvelopesFromDatabase);
 
-envelopesRouter.post('', db.addToDatabase);
+envelopesRouter.post('', db.addEnvelopeToDatabase);
 
 envelopesRouter.get('/total', db.getTotalBudget);
 
-envelopesRouter.get('/:id', db.getFromDatabaseById);
+envelopesRouter.get('/:id', db.getEnvelopeFromDatabaseById);
 
 envelopesRouter.post('/:id', db.substractMoneyFromEnvelopeById);
 
-envelopesRouter.delete('/:id', db.deleteFromDatabaseById)
-
-envelopesRouter.post('/transfer/:from/:to', db.transferMoneyById);
+envelopesRouter.delete('/:id', db.deleteEnvelopeFromDatabaseById)
 
 module.exports = envelopesRouter;
